@@ -2,11 +2,7 @@
 # Also, I can't get it to run automatically - it can only be triggered from the UI. Shouldn't it run on every commit
 # or something?
 name: Java CI with Maven pipeline
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: [push, pull_request]
 jobs:
   build_and_test:
     runs-on: ubuntu-latest
