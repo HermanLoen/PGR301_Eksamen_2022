@@ -34,6 +34,7 @@ ENTRYPOINT ["java","-jar","/app/application.jar"]
 ```
 
 Fjernet unødvedige steps og ryddet i docker.yml filen.
+Inspirasjon er hentet fra: https://docs.docker.com/language/java/configure-ci-cd/
 <img src="/images/Fjernet-steps-oppdaterts-yml.png">
 ```
 name: Docker build
