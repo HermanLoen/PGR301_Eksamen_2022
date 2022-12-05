@@ -1,28 +1,16 @@
 package no.shoppifly;
 
-import io.micrometer.core.instrument.Gauge;
-import io.micrometer.core.instrument.MeterRegistry;
+import io.micrometer.core.annotation.Timed;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.ApplicationListener;
-import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
-import java.math.BigDecimal;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @RestController()
-public class ShoppingCartController implements ApplicationListener<ApplicationReadyEvent> {
-    private final CartService cartService;
-    private MeterRegistry meterRegistry;
+public class ShoppingCartController {
 
     @Autowired
-    public ShoppingCartController(MeterRegistry meterRegistry, CartService cartService) {
-        this.meterRegistry = meterRegistry;
-        this.cartService = cartService;
-    }
+    private final CartService cartService;
 
     public ShoppingCartController(CartService cartService) {
         this.cartService = cartService;
@@ -38,6 +26,7 @@ public class ShoppingCartController implements ApplicationListener<ApplicationRe
      *
      * @return an order ID
      */
+    @Timed(value = "checkout_latency")
     @PostMapping(path = "/cart/checkout")
     public String checkout(@RequestBody Cart cart) {
         return cartService.checkout(cart);
@@ -64,18 +53,5 @@ public class ShoppingCartController implements ApplicationListener<ApplicationRe
         return cartService.getAllCarts();
     }
 
-    @Override
-    public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
-        NaiveCartImpl cart = new NaiveCartImpl();
 
-        Gauge.builder("cartsvalue", cart, NaiveCartImpl::total)
-                .description("Total value of all carts")
-                .register(meterRegistry);
-
-        // total number of carts
-        Gauge.builder("carts", cart.getAllCarts(), List::size)
-                .description("Total number of carts")
-                .register(meterRegistry);
-
-    }
 }
