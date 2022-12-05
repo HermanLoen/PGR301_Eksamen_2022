@@ -32,6 +32,7 @@ public class ShoppingCartController implements ApplicationListener<ApplicationRe
 
     @GetMapping(path = "/cart/{id}")
     public Cart getCart(@PathVariable String id) {
+        meterRegistry.counter("balance").increment();
         return cartService.getCart(id);
     }
 
@@ -53,6 +54,7 @@ public class ShoppingCartController implements ApplicationListener<ApplicationRe
      */
     @PostMapping(path = "/cart")
     public Cart updateCart(@RequestBody Cart cart) {
+        meterRegistry.counter("update_cart").increment();
         return cartService.update(cart);
     }
 
@@ -63,7 +65,7 @@ public class ShoppingCartController implements ApplicationListener<ApplicationRe
      */
     @GetMapping(path = "/carts")
     public List<String> getAllCarts() {
-        meterRegistry.counter("carts").increment();
+        meterRegistry.counter("total_carts").increment();
         return cartService.getAllCarts();
     }
 
@@ -82,8 +84,5 @@ public class ShoppingCartController implements ApplicationListener<ApplicationRe
                                 .mapToDouble(Float::doubleValue)
                                 .sum())
                 .register(meterRegistry);
-    }
-    @ResponseStatus(code = HttpStatus.NOT_FOUND, reason = "account not found")
-    public static class AccountNotFoundException extends RuntimeException {
     }
 }
