@@ -15,8 +15,6 @@ import java.util.Map;
 
 @RestController()
 public class ShoppingCartController implements ApplicationListener<ApplicationReadyEvent> {
-
-    private Map<String, NaiveCartImpl> cart = new HashMap();
     private final CartService cartService;
     private MeterRegistry meterRegistry;
 
@@ -68,18 +66,16 @@ public class ShoppingCartController implements ApplicationListener<ApplicationRe
 
     @Override
     public void onApplicationEvent(ApplicationReadyEvent applicationReadyEvent) {
+        NaiveCartImpl cart = new NaiveCartImpl();
 
-        // Verdi av total
-        Gauge.builder("carts", cart,
-                b -> b.values().size()).register(meterRegistry);
-
-        // Denne meter-typen "Gauge" rapporterer hvor mye penger som totalt finnes i banken
-        Gauge.builder("cartsvalue", cart,
-                        b -> b.values()
-                                .stream()
-                                .map(NaiveCartImpl::total)
-                                .mapToDouble(Float::doubleValue)
-                                .sum())
+        Gauge.builder("cartsvalue", cart, NaiveCartImpl::total)
+                .description("Total value of all carts")
                 .register(meterRegistry);
+
+        // total number of carts
+        Gauge.builder("carts", cart.getAllCarts(), List::size)
+                .description("Total number of carts")
+                .register(meterRegistry);
+
     }
 }
