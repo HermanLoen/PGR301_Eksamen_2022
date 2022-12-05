@@ -62,12 +62,7 @@ class NaiveCartImpl implements CartService, ApplicationListener<ApplicationReady
                 b -> b.values().size()).register(meterRegistry);
 
         // Denne meter-typen "Gauge" rapporterer hvor mye penger som totalt finnes i alle shopping carts til sammen
-        Gauge.builder("cartsvalue", shoppingCarts,
-                        b -> b.values()
-                                .stream()
-                                .map(this::total)
-                                .mapToDouble(Float::doubleValue)
-                                .sum())
+        Gauge.builder("cartsvalue", this::total)
                 .register(meterRegistry);
     }
 }
