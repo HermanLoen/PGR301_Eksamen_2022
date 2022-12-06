@@ -26,7 +26,7 @@ resource "aws_cloudwatch_dashboard" "main" {
     {
       "type": "metric",
       "x": 0,
-      "y": 3,
+      "y": 0,
       "width": 12,
       "height": 6,
       "properties": {
@@ -42,40 +42,40 @@ resource "aws_cloudwatch_dashboard" "main" {
         "title": "Total value in carts"
       },
       {
-      "type": "metric",
-      "x": 0,
-      "y": 5,
-      "width": 12,
-      "height": 6,
-      "properties": {
-        "metrics": [
-          [
-            "${var.candidate_id}",
-            "checkouts.value"
-          ]
-        ],
-        "period": 300,
-        "stat": "Maximum",
-        "region": "eu-west-1",
-        "title": "Total value in carts"
+        "type": "metric",
+        "x": 0,
+        "y": 0,
+        "width": 12,
+        "height": 6,
+        "properties": {
+          "metrics": [
+            [
+              "${var.candidate_id}",
+              "checkouts.value"
+            ]
+          ],
+          "period": 300,
+          "stat": "Maximum",
+          "region": "eu-west-1",
+          "title": "Total value in carts"
       },
       {
-      "type": "metric",
-      "x": 0,
-      "y": 7,
-      "width": 12,
-      "height": 6,
-      "properties": {
-        "metrics": [
-          [
-            "${var.candidate_id}",
-            "checkout_latency.value"
-          ]
-        ],
-        "period": 300,
-        "stat": "Maximum",
-        "region": "eu-west-1",
-        "title": "Total value in carts"
+        "type": "metric",
+        "x": 0,
+        "y": 0,
+        "width": 12,
+        "height": 6,
+        "properties": {
+          "metrics": [
+            [
+              "${var.candidate_id}",
+              "checkout_latency.value"
+            ]
+          ],
+          "period": 300,
+          "stat": "Maximum",
+          "region": "eu-west-1",
+          "title": "Total value in carts"
       }
     }
   ]
