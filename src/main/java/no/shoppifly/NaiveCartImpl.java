@@ -38,6 +38,7 @@ class NaiveCartImpl implements CartService, ApplicationListener<ApplicationReady
     @Override
     public String checkout(Cart cart) {
         shoppingCarts.remove(cart.getId());
+        meterRegistry.counter("checkouts").increment();
         return UUID.randomUUID().toString();
     }
 
@@ -61,7 +62,7 @@ class NaiveCartImpl implements CartService, ApplicationListener<ApplicationReady
         Gauge.builder("carts", shoppingCarts,
                 b -> b.values().size()).register(meterRegistry);
 
-        // Denne meter-typen "Gauge" rapporterer hvor mye penger som totalt finnes i alle shopping carts til sammen
+        // Denne rapporterer hvor mye penger som totalt finnes i alle shopping carts til sammen
         Gauge.builder("cartsvalue", this::total)
                 .register(meterRegistry);
     }
