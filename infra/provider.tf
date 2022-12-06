@@ -6,7 +6,7 @@ terraform {
     }
   }
   backend "s3" {
-    bucket = "1051-exam-2022-terraform-state"
+    bucket = "analytics-1051"
     key    = "1051/app-runner-exam.tfstate"
     region = "eu-west-1"
   }
