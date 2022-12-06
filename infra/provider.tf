@@ -6,8 +6,8 @@ terraform {
     }
   }
   backend "s3" {
-    bucket = "analytics-1051"
-    key    = "1051/app-runner-exam.tfstate"
-    region = "eu-west-1"
+    bucket = "pgr301-exam-2022-terraform-state"
+    key    = "1051/cddemo-application-exam.tfstate"
+    region = "eu-north-1"
   }
 }
