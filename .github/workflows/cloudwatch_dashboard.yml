@@ -3,8 +3,10 @@ defaults:
   run:
     working-directory: infra
 on:
-  pull_request:
-  workflow_dispatch:
+  pull_request: Terraform Plan
+  push:
+    branches:
+      - main: Terraform Apply
 
 jobs:
   terraform:

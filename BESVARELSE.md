@@ -105,3 +105,19 @@ docker push [dinAcountId].dkr.ecr.eu-west-1.amazonaws.com/[dittRepoNavn]:$rev
 * Github vil automatisk trigge en workflow som bygger docker image og pusher til AWS ECR.
 * Gå til AWS konsollen -> Velg fanen ECR -> Velg repoet ditt/søk på repo navn -> Velg fanen Images -> Du skal nå se at det er lagt til et nytt image i repoet ditt.
 
+### Del 5 oppgave 1
+Grunnen til at Terraform prøver å opprette en bucket selv om den eksisterer fra før, er på grunn av state. State er en fil som inneholder informasjon om hva som er opprettet og hva som er endret i terraform.
+Skrur vi på skjulte filer i intelliJ vil vi kunne se .terraform katalog. Den inneholder en terraform "provider" for AWS. Denne provideren har en state fil som heter "terraform.tfstate". Denne filen inneholder informasjon om hva som er opprettet og hva som er endret i terraform. Denne filen er lagret i en bucket som heter eksempelvis "terraform-state-244530008913". Denne bucketen eksisterer fra før og er opprettet i AWS konsollen. 
+Når vi kjører terraform init, så vil terraform prøve å opprette en ny bucket med samme navn. Det er derfor vi får feilmeldingen "Error: Error creating S3 bucket: BucketAlreadyOwnedByYou: Your previous request to create the named bucket succeeded and you already own it".
+
+For å løse dette problemet må vi slette den eksiterende bucketen i AWS konsollen og endre "databucket.tf" og legge til en backend blokk som forteller Terraform att state-informasjon skal lagers i S3.
+Eksempel på backend blokk:
+```terraform
+terraform {
+  backend "s3" {
+    bucket = "pgr301-exam-2022-terraform-state"
+    key    = "<studentId>/apprunner-exam.tfstate"
+    region = "eu-west-1"
+  }
+}
+```
