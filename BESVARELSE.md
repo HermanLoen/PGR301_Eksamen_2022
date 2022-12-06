@@ -116,7 +116,7 @@ Eksempel på backend blokk:
 ```terraform
 terraform {
   backend "s3" {
-    bucket = "pgr301-exam-2022-terraform-state"
+    bucket = "pgr301-exam-2021-terraform-state"
     key    = "<studentId>/apprunner-exam.tfstate"
     region = "eu-west-1"
   }
