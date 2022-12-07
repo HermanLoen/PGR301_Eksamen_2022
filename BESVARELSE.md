@@ -1,3 +1,62 @@
+### Del 1 DevOps-prinsipper
+####A)
+Utfordringen med dagens systemutviklingsprosess er at det er mange manuelle steg i prosessen. Ved å bruke fossefall som utviklings-metode kan det føre til at prosessen tar lenger tid. 
+Hver prosjektfase må fullføres før du går videre til neste fase.
+Andre problemer som kan oppstå under dagens prosess er at det kan være svært tidkrevende å rette opp i feil når de først oppdages. Det kan være vanskelig å innse et problem under en fase, 
+som resulterer i at du må gå tilbake til en tidligere fase for å rette opp i feilen. Dette kan føre til at prosessen tar lenger tid enn den burde.
+Waterfall-metodikken krever at du skisserer prosjektet fra start til slutt. Dette tillater ikke mye fleksibilitet eller endring underveis i prosessen da dette kan føre til 
+komplikasjoner med tidligere/fremtidige faser i prosjekter.
+Dagens leveranse skjer ved at Utviklingsteamet bruker FTP til å overføre en Spring boot JAR sammen med dokumentasjon i en ZIP. En egen avdeling tar i mot disse filene og 
+installerer i AWS / Produksjon. Dette er unødvendig bruk av ressurser da dette burde vært automatisert.
+
+Innføring av devops i prosjektet vil føre til en rekke forbedringer. Flow(Flyt) handler om å minimere risikoen forbundet med utrullinger ved å bruke prinsipper for kontinuerlig levering som:
+* Lage automatisk miljøer for utvikling, test og produksjon etter forespørsel
+* Streng versjonskontroll
+* Automatisering av bygg, test og integrasjon av koden.
+* Ved bruk av unleash kan ny utviklet kode testes mot en spesifikt valgt brukergruppe og størrelse.
+  * Dette forenkler prosessen med å deploye ny kode, hvor man får inblikk i hva som funket bra og eventulet hva som burde endres før koden deployes til hele bruker gruppen.
+* Det senker også risikoen ved å gå fra "Monolithic" til "Microservice" arkitektur.
+
+Ved å innføre DevOps får vi i større grad innblikk og tilbakemeldinger fra applikasjonen. Overvåkning av applikasjonen vil føre til tidligere oppdagelse av feil. Dette muliggjør en sikker leveranseflyt.
+Tilbakemeldinger kan inføres ved hjelp av ulike verktøy som for eksempel: 
+* Alarmer
+* Logs
+* Metrics
+* Test suits
+* Integrasjonstester
+* Ytelse-testing i pipeline.
+
+DevOps er ikke bare en utviklingsmetode men en kultur for kontinuerlig forbedring. Ved å dele ansvar mellom utviklere og driftsavdeling vil det føre til en bedre kommunikasjon og forståelse 
+for hverandres arbeid. Dette vil føre til en bedre kvalitet på applikasjonen og en bedre kundeopplevelse.
+Utviklerene vil måtte ta ansvar for egne feil og utføre forbedringer, samt lære av feil for å redusere feil i fremtidige utviklingsprosesser. 
+
+Prinsippene som blir brutt er:
+* Automatisering
+* CI
+* CD
+* Overvåkning/Tilbakemelding/logging
+* Alarmer
+
+####B)
+Problemet med denne tilnærmingen er at de ikke tar tak i selve problemet og den underliggende årsaken til at feilene først oppstår under release.
+Bedriften fokuserer på å ikke ha feil i produksjon i stedet for å fokusere på hvorfor det feiler. Ved å rette opp i feilene underveis i utviklingen vil det føre til færre feil i produksjon. 
+Det er også viktig at bedriften fokuserer på å lære av feilene de gjør og holder utviklerne ansvarlig for egne feil. Dette vil føre til at de blir flinkere til å finne feilene før de havner i produksjon.
+
+
+####C)
+Utfordringer med å overlevere koden til en sepparat drifts-avdeling er at utviklerne ikke har ansvar for koden de har utviklet. Dette betyr at vi ikke er ansvarlige for eventuelle feil som oppstår under produksjonen. 
+Som videre betyr at de ikke lærer av feilene de gjør, samt ikke blir flinkere til å oppdage dem før de havner i produksjon.
+Ved å ha en utvikler på vakt som har kjennskap til koden som er ute i produksjon kan drastisk redusere tiden det tar fra en feil er oppdaget i produksjon til den er rettet opp i.
+####D)
+Å release kode ofte kan føre til utfordinger i form av feil i produksjonskode. Feil i produksjon kan i verstefall føre til nedetid for applikasjonen og derfor en dårlig kundeopplevelse og økte kostnader 
+for bedriften i form av feilsøking og overtidsarbeid. 
+Ved bruk av DevOps prinsipper kan vi redusere/fjerne risikoen ved hyppige leversanser:
+* Ved å bruke CI/CD vil vi kunne teste koden i et testmiljø før den havner i produksjon. Dette vil redusere risikoen for feil i produksjon.
+* Overvåkning i form av alarmer og Metrics vil gi oss varslinger/indikasjoner om feil som  kan oppstå i produksjon. Dette vil hjelper oss med å oppdage eventuelle feil 
+før de har oppstått i produksjon og redusere tiden det tar å rette opp i feilen.
+* Ved bruk av verktøy som for eksempel Unleash kan vi teste koden mot en spesifikt valgt brukergruppe og størrelse. Dette vil føre til at bare en liten bruker gruppe får ny kode,
+derrav får vi testet koden mot en liten brukergruppe før vi deployer koden til hele brukergruppen. Dette vil redusere risikoen for feil i produksjon. Samtidig kan vi velge å reversere koden dersom det oppstår uventete feil i andre deler av applikasjonen.
+
 ### Oppgave 3 
 
 * Gå til **Settings/Branches** og se etter seksjonen "Branch Protection Rules".
@@ -118,7 +177,7 @@ terraform {
   backend "s3" {
     bucket = "pgr301-exam-2021-terraform-state"
     key    = "<studentId>/apprunner-exam.tfstate"
-    region = "eu-west-1"
+    region = "eu-north-1"
   }
 }
 ```
