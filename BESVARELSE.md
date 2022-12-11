@@ -57,6 +57,7 @@ før de har oppstått i produksjon og redusere tiden det tar å rette opp i feil
 * Ved bruk av verktøy som for eksempel Unleash kan vi teste koden mot en spesifikt valgt brukergruppe og størrelse. Dette vil føre til at bare en liten bruker gruppe får ny kode,
 derrav får vi testet koden mot en liten brukergruppe før vi deployer koden til hele brukergruppen. Dette vil redusere risikoen for feil i produksjon. Samtidig kan vi velge å reversere koden dersom det oppstår uventete feil i andre deler av applikasjonen.
 
+## Del 2-CI
 ### Oppgave 3 
 
 * Gå til **Settings/Branches** og se etter seksjonen "Branch Protection Rules".
